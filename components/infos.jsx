@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "../styles/infos.module.css";
+import styles from "../styles/Infos.module.css";
 
 export const infos = ({countries, population, day,  cases, casesActive, recovered}) => {
   const format = (x) => {
