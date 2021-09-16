@@ -1,6 +1,6 @@
 {
-  "name": "police_api",
-  "version": "0.1.0",
+  "name": "covid_19",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "leaflet": "^1.7.1",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "7.32.0",
