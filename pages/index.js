@@ -12,7 +12,7 @@ const url =
     method: "GET",
     headers: {
       "x-rapidapi-host": "covid-193.p.rapidapi.com",
-      "x-rapidapi-key": "28e6111661mshd7c5034e3fb20d2p17e77fjsn4cb05d352ad9",
+      "x-rapidapi-key": process.env.NEXT_API_KEY,
     },
   });
 
