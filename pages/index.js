@@ -93,7 +93,7 @@ export const getStaticProps = async () => {
     method: "GET",
     headers: {
       "x-rapidapi-host": "covid-193.p.rapidapi.com",
-      "x-rapidapi-key": process.env.NEXT_API_KEY,
+      "x-rapidapi-key": process.env.wcConsumerKey,
     },
   });
   const data = await res.json();
