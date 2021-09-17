@@ -7,9 +7,10 @@ export const btn = ({continents, setFilter}) => {
         <div className={styles.container}>
               {continents.map((continent, index) => {
         return (
-         <h1 className={styles.btn} key={index} onClick={() => setFilter(continent)}>
+          //mapping continents result on one element NULL
+         continent !== null ? <h1 className={styles.btn} key={index} onClick={() => setFilter(continent)}>
             {continent}
-          </h1> 
+          </h1> : null
         );
       })}
         </div>

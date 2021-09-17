@@ -98,5 +98,5 @@ export const getStaticProps = async () => {
   });
   const data = await res.json();
 
-  return { props: { data: data.response } };
+  return { props: { data: data.response ?? null } };
 };

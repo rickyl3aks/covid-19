@@ -1,8 +1,8 @@
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import styles from '../styles/chart.module.css'
 
- const chart = ({recovered, cases, countries}) => {
+ export const chart = ({recovered, cases, countries}) => {
     return (
         <div>
               <Bar

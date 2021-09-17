@@ -7,7 +7,7 @@ export const infos = ({countries, population, day,  cases, casesActive, recovere
   };
   
     return (
-<div className={styles.container}>
+      <div className={styles.container}>
         <h1>Update: {day}</h1>
         <h1 className={styles.population}>
           Population: {population ? format(population) : "No data available"}
