@@ -1,7 +1,7 @@
 .bg {
-  background-image: url("https://www.paho.org/sites/default/files/styles/max_1500x1500/public/2021-05/covid-19-variants.jpg?itok=szJH1mCw");
+  background-image: url("/covid_19.png");
   background-size: cover;
-  background-position: center center;
+  background-position: right;
   padding: 2rem;
   box-shadow: 2px 5px 3px rgba(0, 0, 0, 0.7);
   margin-bottom: 0.5rem;

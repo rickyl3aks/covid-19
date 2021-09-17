@@ -1,20 +1,9 @@
 import Head from "next/head";
 import React, { useState } from "react";
-import Image from "next/image";
 import Infos from "../components/infos";
 import Btn from "../components/btn";
-import useSWR from "swr";
+import Chart from "../components/chart";
 import styles from "../styles/Home.module.css";
-
-const url =
-  ("https://covid-193.p.rapidapi.com/countries",
-  {
-    method: "GET",
-    headers: {
-      "x-rapidapi-host": "covid-193.p.rapidapi.com",
-      "x-rapidapi-key": process.env.NEXT_API_KEY,
-    },
-  });
 
 export default function Home({ data }) {
   const [filter, setFilter] = useState();
@@ -69,6 +58,9 @@ export default function Home({ data }) {
           <h1 className={styles.title}>Choose a continent</h1>
         )}
       </div>
+      {countries !== undefined ? (
+        <Chart recovered={recovered} cases={cases} countries={countries} />
+      ) : null}
       {filter !== undefined
         ? filterCategory.map((country) => {
             return (
@@ -101,7 +93,7 @@ export const getStaticProps = async () => {
     method: "GET",
     headers: {
       "x-rapidapi-host": "covid-193.p.rapidapi.com",
-      "x-rapidapi-key": "28e6111661mshd7c5034e3fb20d2p17e77fjsn4cb05d352ad9",
+      "x-rapidapi-key": process.env.NEXT_API_KEY,
     },
   });
   const data = await res.json();

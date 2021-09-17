@@ -9,11 +9,11 @@ export const infos = ({countries, population, day,  cases, casesActive, recovere
     return (
 <div className={styles.container}>
         <h1>Update: {day}</h1>
-        <h1 className={styles.deaths}>
-          Total deaths: {countries ? format(countries) : "No data available"}
-        </h1>
         <h1 className={styles.population}>
           Population: {population ? format(population) : "No data available"}
+        </h1>
+        <h1 className={styles.deaths}>
+          Total deaths: {countries ? format(countries) : "No data available"}
         </h1>
         <h1>New Cases: {cases ? format(cases) : "No data available"}</h1>
         <h1>
