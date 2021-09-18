@@ -2,7 +2,7 @@
   display: block;
   margin: 1rem auto;
   padding: 0.3rem;
-  outline: none;
-  border: none;
+  outline: 0px;
+  border: 0px;
   border-bottom: 3px solid orange;
 }
