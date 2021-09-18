@@ -7,7 +7,7 @@ export const btn = ({continents, setFilter}) => {
         <div className={styles.container}>
               {continents.map((continent, index) => {
         return (
-          //mapping continents result on one element NULL
+          //mapping continents result on one element be NULL
          continent !== null ? <h1 className={styles.btn} key={index} onClick={() => setFilter(continent)}>
             {continent}
           </h1> : null

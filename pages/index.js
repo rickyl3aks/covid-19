@@ -2,32 +2,26 @@ import Head from "next/head";
 import React, { useState } from "react";
 import Infos from "../components/infos";
 import Btn from "../components/btn";
+import Select from "../components/select";
 import Chart from "../components/chart";
 import styles from "../styles/Home.module.css";
 
 export default function Home({ data }) {
   const [filter, setFilter] = useState();
-  const [countries, setCountries] = useState();
+  const [country, setCountry] = useState();
+  const [deaths, setDeaths] = useState();
   const [population, setPopulation] = useState();
   const [day, setDay] = useState();
   const [cases, setCases] = useState();
   const [casesActive, setCasesActive] = useState();
   const [recovered, setRecovered] = useState();
+  const [value, setValue] = useState();
 
   const filterCategory = filter
     ? data.filter((c) => c.continent === filter)
     : data;
 
   const continents = [...new Set(data.map((c) => c.continent))];
-
-  const getInfos = (deaths, pop, day, newCases, active, recover) => {
-    setCountries(deaths);
-    setPopulation(pop);
-    setDay(day);
-    setCases(newCases);
-    setCasesActive(active);
-    setRecovered(recover);
-  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -36,6 +30,27 @@ export default function Home({ data }) {
     });
   };
 
+  const handleOnChange = async (e) => {
+    const res = await fetch(
+      "https://covid-193.p.rapidapi.com/statistics?country=" + e.target.value,
+      {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "covid-193.p.rapidapi.com",
+          "x-rapidapi-key": process.env.wcConsumerKey,
+        },
+      }
+    );
+    const data = await res.json();
+
+    setRecovered(data.response[0].cases.recovered);
+    setCases(data.response[0].cases.new);
+    setDeaths(data.response[0].deaths.total);
+    setCountry(e.target.value);
+    setPopulation(data.response[0].population);
+    setDay(data.response[0].day);
+    setCasesActive(data.response[0].cases.active);
+  };
   return (
     <div>
       <Head>
@@ -43,9 +58,9 @@ export default function Home({ data }) {
       </Head>
       <div className={styles.bg}>
         <Btn continents={continents} setFilter={setFilter} />
-        {countries !== undefined ? (
+        {deaths !== undefined ? (
           <Infos
-            countries={countries}
+            deaths={deaths}
             population={population}
             day={day}
             cases={cases}
@@ -58,32 +73,17 @@ export default function Home({ data }) {
           <h1 className={styles.title}>Choose a continent</h1>
         )}
       </div>
-      {countries !== undefined ? (
-        <Chart recovered={recovered} cases={cases} countries={countries} />
+
+      {filter !== undefined ? (
+        <Select
+          filterCategory={filterCategory}
+          handleOnChange={handleOnChange}
+        />
       ) : null}
-      {filter !== undefined
-        ? filterCategory.map((country) => {
-            return (
-              <h1
-                className={styles.country}
-                key={country.country}
-                onClick={() => {
-                  getInfos(
-                    country.deaths.total,
-                    country.population,
-                    country.day,
-                    country.cases.new,
-                    country.cases.active,
-                    country.cases.recovered
-                  );
-                  scrollToTop();
-                }}
-              >
-                {country.country}
-              </h1>
-            );
-          })
-        : null}
+
+      {deaths !== undefined ? (
+        <Chart recovered={recovered} cases={cases} deaths={deaths} />
+      ) : null}
     </div>
   );
 }

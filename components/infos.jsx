@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from "../styles/Infos.module.css";
 
-export const infos = ({countries, population, day,  cases, casesActive, recovered}) => {
+export const infos = ({deaths, population, day,  cases, casesActive, recovered}) => {
   const format = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -13,7 +13,7 @@ export const infos = ({countries, population, day,  cases, casesActive, recovere
           Population: {population ? format(population) : "No data available"}
         </h1>
         <h1 className={styles.deaths}>
-          Total deaths: {countries ? format(countries) : "No data available"}
+          Total deaths: {deaths ? format(deaths) : "No data available"}
         </h1>
         <h1>New Cases: {cases ? format(cases) : "No data available"}</h1>
         <h1>
