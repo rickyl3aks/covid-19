@@ -1,34 +1,46 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import Infos from "../components/infos";
 import Btn from "../components/btn";
 import Select from "../components/select";
 import Chart from "../components/chart";
 import styles from "../styles/Home.module.css";
 
+const initialState = {
+  country: null,
+  deaths: null,
+  population: null,
+  day: null,
+  cases: null,
+  recovered: null,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "get data":
+      return {
+        country: action.payload.country,
+        deaths: action.payload.deaths,
+        population: action.payload.population,
+        day: action.payload.day,
+        cases: action.payload.cases,
+        recovered: action.payload.recovered,
+      };
+      break;
+    default:
+      state;
+  }
+};
+
 export default function Home({ data }) {
   const [filter, setFilter] = useState();
-  const [country, setCountry] = useState();
-  const [deaths, setDeaths] = useState();
-  const [population, setPopulation] = useState();
-  const [day, setDay] = useState();
-  const [cases, setCases] = useState();
-  const [casesActive, setCasesActive] = useState();
-  const [recovered, setRecovered] = useState();
-  const [value, setValue] = useState();
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const filterCategory = filter
     ? data.filter((c) => c.continent === filter)
     : data;
 
   const continents = [...new Set(data.map((c) => c.continent))];
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
 
   const handleOnChange = async (e) => {
     const res = await fetch(
@@ -43,14 +55,19 @@ export default function Home({ data }) {
     );
     const data = await res.json();
 
-    setRecovered(data.response[0].cases.recovered);
-    setCases(data.response[0].cases.new);
-    setDeaths(data.response[0].deaths.total);
-    setCountry(e.target.value);
-    setPopulation(data.response[0].population);
-    setDay(data.response[0].day);
-    setCasesActive(data.response[0].cases.active);
+    dispatch({
+      type: "get data",
+      payload: {
+        country: e.target.value,
+        deaths: data.response[0].deaths.total,
+        population: data.response[0].population,
+        day: data.response[0].day,
+        cases: data.response[0].cases.new,
+        recovered: data.response[0].cases.recovered,
+      },
+    });
   };
+
   return (
     <div>
       <Head>
@@ -58,14 +75,14 @@ export default function Home({ data }) {
       </Head>
       <div className={styles.bg}>
         <Btn continents={continents} setFilter={setFilter} />
-        {deaths !== undefined ? (
+        {state.day !== null ? (
           <Infos
-            deaths={deaths}
-            population={population}
-            day={day}
-            cases={cases}
-            casesActive={casesActive}
-            recovered={recovered}
+            deaths={state.deaths}
+            population={state.population}
+            day={state.day}
+            cases={state.cases}
+            casesActive={state.casesActive}
+            recovered={state.recovered}
           />
         ) : filter !== undefined ? (
           <h1 className={styles.title}>Now choose a country</h1>
@@ -81,8 +98,12 @@ export default function Home({ data }) {
         />
       ) : null}
 
-      {deaths !== undefined ? (
-        <Chart recovered={recovered} cases={cases} deaths={deaths} />
+      {state.day !== null ? (
+        <Chart
+          recovered={state.recovered}
+          cases={state.cases}
+          deaths={state.deaths}
+        />
       ) : null}
     </div>
   );
