@@ -24,6 +24,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+#security key
+next.config.js
+
 # local env files
 .env
 .env.local
