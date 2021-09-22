@@ -1,39 +1,48 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import styles from '../styles/chart.module.css'
+import { ResponsiveBar } from '@nivo/bar';
 
- export const chart = ({recovered, cases, deaths}) => {
-    return (
-        <div>
-              <Bar
-              className={styles.chart}
-              data={{
-                labels: ["Recovered", "New Cases", "Death"],
-                datasets: [
-                  {
-                    data: [recovered, cases, deaths],
-                    backgroundColor: [
-                      "rgb(35, 131, 35)",
-                      "rgb(255, 192, 203)",
-                      "rgb(231, 21, 21)",
-                    ],
-                    borderColor: [
-                      "rgb(35, 131, 35)",
-                      "rgb(255, 192, 203)",
-                      "rgb(231, 21, 21)",
-                    ],
-                  },
-                ],
-              }}
-              height={50}
-              width={100}
-              options={
-                ({ maintainAspectRatio: false },
-                { plugins: { legend: { display: false } } })
-              }
-            />
-        </div>
-    )
+export const chart = ({recovered, cases, deaths, country}) => {
+
+  return (
+    <ResponsiveBar
+    data={[
+      {
+        data: "Recovered",
+        Recovered: recovered
+      },
+      {
+        data: "Cases",
+        "New cases": cases
+      },
+      {
+        data: "Death",
+        Deaths: deaths
+      },
+    ]}
+    keys={["Recovered", 'New cases', 'Deaths']}
+      indexBy="data"
+      margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+      padding={0.4}
+      valueScale={{ type: "linear" }}
+      colors={[ 'rgb(35, 131, 35)', 'rgb(255, 192, 203)', 'rgb(231, 21, 21)' ]}
+      colorBy='index'
+      animate={true}
+      enableLabel={false}
+      axisTop={null}
+      axisRight={null}
+      axisLeft={{
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legendPosition: "middle",
+        legendOffset: -40
+        
+      }}
+    />
+  )
 }
+
+
 
 export default chart

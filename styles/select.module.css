@@ -1,6 +1,7 @@
 .container > select {
   display: block;
-  margin: 1.5rem auto;
+  margin: auto;
+  margin-top: 1.5rem;
   padding: 0.3rem;
   outline: none;
 }

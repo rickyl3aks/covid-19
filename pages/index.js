@@ -99,11 +99,14 @@ export default function Home({ data }) {
       ) : null}
 
       {state.day !== null ? (
-        <Chart
-          recovered={state.recovered}
-          cases={state.cases}
-          deaths={state.deaths}
-        />
+        <div style={{ height: "250px", margin: "0 1rem" }}>
+          <Chart
+            recovered={state.recovered}
+            cases={state.cases}
+            deaths={state.deaths}
+            country={state.country}
+          />
+        </div>
       ) : null}
     </div>
   );
