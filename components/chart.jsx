@@ -1,5 +1,4 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
 import { ResponsiveBar } from '@nivo/bar';
 
 export const chart = ({recovered, cases, deaths, country}) => {
@@ -37,8 +36,32 @@ export const chart = ({recovered, cases, deaths, country}) => {
         tickRotation: 0,
         legendPosition: "middle",
         legendOffset: -40
-        
       }}
+      defs={[
+        {
+          id: "lines",
+          type: "patternLines",
+          background: "inherit",
+          color: "#eed312",
+          rotation: -45,
+          lineWidth: 6,
+          spacing: 10,
+        },
+      ]}
+      fill={[
+        {
+          match: {
+            id: "Recovered",
+          },
+          id: "dots",
+        },
+        {
+          match: {
+            id: "Death",
+          },
+          id: "lines",
+        },
+      ]}
     />
   )
 }
